@@ -21,8 +21,7 @@ namespace APIStatistikaApp.DataAccess.Data
         }
 
         // Vrni vse podatke.
-        //public async Task<StatistikaModel> VrniVsePodatke()
-        public async Task<IEnumerable<StatistikaModel>> VrniVsePodatke()
+        public async Task<IEnumerable<StatistikaModel>> LogVrniVseKlice()
         {
             string sqlString = "SELECT * FROM tabStatistika";
 
@@ -32,8 +31,8 @@ namespace APIStatistikaApp.DataAccess.Data
             return result;
         }
 
-        // Poisci zadnji klic (MAX DatumVpisa).
-        public async Task<StatistikaModel> NaloziZadnjeKlicanEP()
+        // Vrni enega od zadnjih LOG-ov (MAX DatumVpisa).
+        public async Task<StatistikaModel> LogVrniZadnjiKlic()
         {
             string sqlString = "SELECT * " + 
                                "  FROM tabStatistika " + 
@@ -43,19 +42,19 @@ namespace APIStatistikaApp.DataAccess.Data
             return result.FirstOrDefault();
         }
 
-        // Prikazi najpogostejse klice.
-        public async Task<StatistikaModelCounter> NaloziNajpogostejeKlicanEP()
+        // Grupiraj vse klice in izpisi njihovo stevilo za top 5 klicov.
+        public async Task<StatistikaModelCounter> LogVsotaTop5Klicev()
         {
-            string sqlString = "SELECT TOP 1 ImeKlicaneStoritve, SteviloKlicev " +
+            string sqlString = "SELECT TOP 5 ImeKlicaneStoritve, SteviloKlicev " +
                                "  FROM (SELECT ImeKlicaneStoritve, Count(*) AS SteviloKlicev " +
-                                       " FROM tabStatistika GROUP BY ImeKlicaneStoritve) AS tabela WHERE ImeKlicaneStoritve> '' ORDER BY SteviloKlicev DESC";
+                                       " FROM tabStatistika GROUP BY ImeKlicaneStoritve) AS tabTemp WHERE ImeKlicaneStoritve > '' ORDER BY SteviloKlicev DESC";
             
             var result = await _db.LoadOne<StatistikaModelCounter, dynamic>(sqlString, new { });
             return result.FirstOrDefault();
         }
 
         // Seznam vseh klicev in njihovo stevilo.
-        public async Task<IEnumerable<StatistikaModelCounter>> SteviloEPKlicev()
+        public async Task<IEnumerable<StatistikaModelCounter>> LogVsotaKlicev()
         {
             string sqlString = "SELECT ImeKlicaneStoritve, COUNT(*) AS SteviloKlicev " +
                                "  FROM tabStatistika " +
@@ -65,8 +64,8 @@ namespace APIStatistikaApp.DataAccess.Data
             return result;
         }
 
-        // Vnos novega klica.
-        public async Task ShraniNoviKlicEP(StatistikaModel parameter)
+        // Vnos novega zapisa v LOG (za potrebe testa).
+        public async Task LogVnosTestnegaKlica(StatistikaModel parameter)
         {
             string sqlString = "INSERT INTO tabStatistika (DatumVpisa, ImeKlicaneStoritve) " +
                                " VALUES(@DatumVpisa, @ImeKlicaneStoritve)";

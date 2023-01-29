@@ -10,18 +10,19 @@ namespace APIStatistikaApp
         public static void ConfigureApi(this WebApplication app)
         {
             // Mapiranje metod.
-            app.MapGet("/stat/vsiPodatki", VrniVsePodatke);
-            app.MapGet("/stat/zadnjiKlicanEP", NaloziZadnjeKlicanEP);
-            app.MapGet("/stat/najpogostejeKlicanEP", NaloziNajpogostejeKlicanEP);
-            app.MapGet("/stat/steviloEPKlicev", SteviloEPKlicev);
-            app.MapPost("/stat/noviKlicEP", NoviKlicEP);
+            app.MapGet("/stat/logVsiKlici", LogVrniVseKlice);
+            app.MapGet("/stat/logZadnjiKlic", LogVrniZadnjiKlic);
+            app.MapGet("/stat/logTop5Klicov", LogVsotaTop5Klicov);
+            app.MapGet("/stat/logVsotaKlicev", LogVsotaKlicev);
+            app.MapPost("/stat/logVnosTestnegaKlica", LogVnosTestnegaKlica);
         }
 
-        private static async Task<IResult> VrniVsePodatke(IStatistikaData data)
+        // Izpis celotnega LOG-a klicov storitev.
+        private static async Task<IResult> LogVrniVseKlice(IStatistikaData data)
         {
             try
             {
-                var result = Results.Ok(await data.VrniVsePodatke());
+                var result = Results.Ok(await data.LogVrniVseKlice());
                 return result;
             }
             catch (Exception ex)
@@ -30,11 +31,12 @@ namespace APIStatistikaApp
             }
         }
 
-        private static async Task<IResult> NaloziZadnjeKlicanEP(IStatistikaData data)
+        // Vrni zadnjo klicano storitev.
+        private static async Task<IResult> LogVrniZadnjiKlic(IStatistikaData data)
         {
             try
             {
-                var result = Results.Ok(await data.NaloziZadnjeKlicanEP());
+                var result = Results.Ok(await data.LogVrniZadnjiKlic());
                 return result;
             }
             catch (Exception ex)
@@ -43,13 +45,13 @@ namespace APIStatistikaApp
             }
         }
 
-        // Izpise storitev, ki so klicana najveckrat.
-        private static async Task<IResult> NaloziNajpogostejeKlicanEP(IStatistikaData data)
+        // Izpise najveckrat klicane storitve in stevilo klicov za top 5.
+        private static async Task<IResult> LogVsotaTop5Klicov(IStatistikaData data)
         {
             try
             {
                 //MyRabbitMq myRabbitMq = new MyRabbitMq("GET klic za izpis vseh zahtevkov ");
-                var result = Results.Ok(await data.NaloziNajpogostejeKlicanEP());
+                var result = Results.Ok(await data.LogVsotaTop5Klicev());
                 return result;
             }
             catch (Exception ex)
@@ -59,12 +61,12 @@ namespace APIStatistikaApp
         }
 
         // Izpis stevila izvrsenih klicev posamezne storitve.
-        private static async Task<IResult> SteviloEPKlicev(IStatistikaData data)
+        private static async Task<IResult> LogVsotaKlicev(IStatistikaData data)
         {
             try
             {
                 //MyRabbitMq myRabbitMq = new MyRabbitMq("GET klic za izpis vseh zahtevkov ");
-                var result = Results.Ok(await data.SteviloEPKlicev());
+                var result = Results.Ok(await data.LogVsotaKlicev());
                 return result;
             }
             catch (Exception ex)
@@ -74,12 +76,12 @@ namespace APIStatistikaApp
         }
 
         // LOG izvedene storitve.
-        private static async Task<IResult> NoviKlicEP(StatistikaModel statistikaModel, IStatistikaData data)
+        private static async Task<IResult> LogVnosTestnegaKlica(StatistikaModel statistikaModel, IStatistikaData data)
         {
             try
             {
                 //MyRabbitMq myRabbitMq = new MyRabbitMq("POST klic za dodajanje zahtevka ");
-                await data.ShraniNoviKlicEP(statistikaModel);
+                await data.LogVnosTestnegaKlica(statistikaModel);
                 return Results.Ok();
             }
             catch (Exception ex)
