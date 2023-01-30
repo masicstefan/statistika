@@ -51,9 +51,9 @@ namespace APIStatistikaApp.DataAccess.Data
                                        " WHERE ImeKlicaneStoritve > '' " +
                                        " ORDER BY SteviloKlicev DESC ";
 
-            var result = await _db.LoadOne<StatistikaModelCounter, dynamic>(sqlString, new { });
+            //var result = await _db.LoadOne<StatistikaModelCounter, dynamic>(sqlString, new { });
             //return result.FirstOrDefault();  // <--- vrne samo ENEGA, TO NI V REDU.
-            // var result = await _db.LoadAll<StatistikaModelCounter>(sqlString);
+            var result = await _db.LoadAll<StatistikaModelCounter>(sqlString);
             return result;
         }
 

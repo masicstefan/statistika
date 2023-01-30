@@ -7,7 +7,7 @@ namespace APIStatistikaApp.DataAccess.Data
     {
         Task<IEnumerable<StatistikaModel>> LogVrniVseKlice();
         Task<StatistikaModel> LogVrniZadnjiKlic();
-        Task<StatistikaModelCounter> LogVsotaTop5Klicev();
+        Task<IEnumerable<StatistikaModelCounter>> LogVsotaTop5Klicev();
         Task<IEnumerable<StatistikaModelCounter>> LogVsotaKlicev();
         Task LogVnosTestnegaKlica(StatistikaModel parameter);
     }
