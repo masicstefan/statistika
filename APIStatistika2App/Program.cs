@@ -37,6 +37,8 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 }); ;
+
+
 builder.Services.AddSingleton<ISQLDataAccess, SQLDataAccess>();
 builder.Services.AddSingleton<IStatistikaData, StatistikaData>();
 //builder.Services.AddSingleton<JwtService>();

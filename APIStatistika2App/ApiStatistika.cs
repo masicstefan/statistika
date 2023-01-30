@@ -87,7 +87,6 @@ namespace APIStatistikaApp
             catch (Exception ex)
             {
                 return Results.Problem(ex.Message);
-
             }
         }
     }

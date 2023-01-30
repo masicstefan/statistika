@@ -24,7 +24,7 @@ namespace APIStatistikaApp.DataAccess.Data
         public async Task<IEnumerable<StatistikaModel>> LogVrniVseKlice()
         {
             string sqlString = "SELECT * FROM tabStatistika";
-
+            
             //var result = await _db.LoadOne<StatistikaModel, dynamic>(sqlString, new { });
             var result = await _db.LoadOne<StatistikaModel, dynamic>(sqlString, new { });
             //return result.FirstOrDefault();
