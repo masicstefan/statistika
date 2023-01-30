@@ -43,14 +43,18 @@ namespace APIStatistikaApp.DataAccess.Data
         }
 
         // Grupiraj vse klice in izpisi njihovo stevilo za top 5 klicov.
-        public async Task<StatistikaModelCounter> LogVsotaTop5Klicev()
+        public async Task<IEnumerable<StatistikaModelCounter>> LogVsotaTop5Klicev()
         {
             string sqlString = "SELECT TOP 5 ImeKlicaneStoritve, SteviloKlicev " +
                                "  FROM (SELECT ImeKlicaneStoritve, Count(*) AS SteviloKlicev " +
-                                       " FROM tabStatistika GROUP BY ImeKlicaneStoritve) AS tabTemp WHERE ImeKlicaneStoritve > '' ORDER BY SteviloKlicev DESC";
-            
+                                       " FROM tabStatistika GROUP BY ImeKlicaneStoritve) AS tabTemp " +
+                                       " WHERE ImeKlicaneStoritve > '' " +
+                                       " ORDER BY SteviloKlicev DESC ";
+
             var result = await _db.LoadOne<StatistikaModelCounter, dynamic>(sqlString, new { });
-            return result.FirstOrDefault();
+            //return result.FirstOrDefault();  // <--- vrne samo ENEGA, TO NI V REDU.
+            // var result = await _db.LoadAll<StatistikaModelCounter>(sqlString);
+            return result;
         }
 
         // Seznam vseh klicev in njihovo stevilo.
