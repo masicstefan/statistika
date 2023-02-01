@@ -2,7 +2,7 @@
 using APIStatistikaApp.DataAccess.Model;
 using Microsoft.AspNetCore.Authorization;
 
-
+// TEST
 namespace APIStatistikaApp
 {
     public static class ApiStatistika
