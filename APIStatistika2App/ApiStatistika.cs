@@ -22,6 +22,7 @@ namespace APIStatistikaApp
         {
             try
             {
+                FeriRabbitMQ feriRabbitMq = new FeriRabbitMQ("GET klic za izpis vseh zahtev API - ŠM, LogVrniVseKlice.");
                 var result = Results.Ok(await data.LogVrniVseKlice());
                 return result;
             }
@@ -36,6 +37,7 @@ namespace APIStatistikaApp
         {
             try
             {
+                FeriRabbitMQ feriRabbitMq = new FeriRabbitMQ("GET klic za izpis vseh zahtev API - ŠM, LogVrniZadnjiKlic.");
                 var result = Results.Ok(await data.LogVrniZadnjiKlic());
                 return result;
             }
@@ -50,7 +52,7 @@ namespace APIStatistikaApp
         {
             try
             {
-                //MyRabbitMq myRabbitMq = new MyRabbitMq("GET klic za izpis vseh zahtevkov ");
+                FeriRabbitMQ feriRabbitMq = new FeriRabbitMQ("GET klic za izpis vseh zahtevkov - SM, LogVsotaTop5Klicov.");
                 var result = Results.Ok(await data.LogVsotaTop5Klicev());
                 return result;
             }
@@ -65,7 +67,7 @@ namespace APIStatistikaApp
         {
             try
             {
-                //MyRabbitMq myRabbitMq = new MyRabbitMq("GET klic za izpis vseh zahtevkov ");
+                FeriRabbitMQ feriRabbitMq = new FeriRabbitMQ("GET klic za izpis vseh zahtevkov - SM, LogVsotaKlicev.");
                 var result = Results.Ok(await data.LogVsotaKlicev());
                 return result;
             }
@@ -80,7 +82,7 @@ namespace APIStatistikaApp
         {
             try
             {
-                //MyRabbitMq myRabbitMq = new MyRabbitMq("POST klic za dodajanje zahtevka ");
+                FeriRabbitMQ feriRabbitMq = new FeriRabbitMQ("POST klic za dodajanje zahtevka - SM, LogVnosTestnegaKlica.");
                 await data.LogVnosTestnegaKlica(statistikaModel);
                 return Results.Ok();
             }
