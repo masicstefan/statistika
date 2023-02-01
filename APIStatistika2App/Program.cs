@@ -75,6 +75,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseHttpsRedirection();
+
 app.UseCors(MyAllowAllOrigins);
 app.ConfigureApi();
 
