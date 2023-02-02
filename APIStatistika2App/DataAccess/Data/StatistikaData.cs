@@ -1,12 +1,7 @@
 ﻿using APIStatistikaApp.DataAccess.DbAccess;
 using APIStatistikaApp.DataAccess.Model;
 using Dapper;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace APIStatistikaApp.DataAccess.Data
@@ -25,9 +20,7 @@ namespace APIStatistikaApp.DataAccess.Data
         {
             string sqlString = "SELECT * FROM tabStatistika";
             
-            //var result = await _db.LoadOne<StatistikaModel, dynamic>(sqlString, new { });
             var result = await _db.LoadOne<StatistikaModel, dynamic>(sqlString, new { });
-            //return result.FirstOrDefault();
             return result;
         }
 
@@ -51,8 +44,6 @@ namespace APIStatistikaApp.DataAccess.Data
                                        " WHERE ImeKlicaneStoritve > '' " +
                                        " ORDER BY SteviloKlicev DESC ";
 
-            //var result = await _db.LoadOne<StatistikaModelCounter, dynamic>(sqlString, new { });
-            //return result.FirstOrDefault();  // <--- vrne samo ENEGA, TO NI V REDU.
             var result = await _db.LoadAll<StatistikaModelCounter>(sqlString);
             return result;
         }
@@ -75,7 +66,6 @@ namespace APIStatistikaApp.DataAccess.Data
                                " VALUES(@DatumVpisa, @ImeKlicaneStoritve)";
 
             var _parameter = new DynamicParameters();
-            // _parameter.Add("IdStatistike", parameter.IdStatistike, DbType.Int32);
             _parameter.Add("DatumVpisa", parameter.DatumVpisa, DbType.Date);
             _parameter.Add("ImeKlicaneStoritve", parameter.ImeKlicaneStoritve, DbType.String);
 

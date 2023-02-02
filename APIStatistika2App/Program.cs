@@ -29,7 +29,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Statistika API",
         Version = "v1",
-        Description = "API za statistiko naročilnic (Avtor: ŠM)."
+        Description = "API za kumulativno statistiko OS UKM (Avtor: ŠM)."
     });
 
     // Set the comments path for the Swagger JSON and UI.
@@ -64,12 +64,8 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-//}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseAuthentication();
 app.UseAuthorization();
